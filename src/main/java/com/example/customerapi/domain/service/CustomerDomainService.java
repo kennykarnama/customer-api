@@ -9,8 +9,6 @@ import javax.transaction.Transactional;
 import com.example.customerapi.domain.Customer;
 import com.example.customerapi.domain.repository.CustomerRepository;
 
-import liquibase.pro.packaged.nu;
-
 public class CustomerDomainService implements CustomerService {
 
     private final CustomerRepository customerRepo;
