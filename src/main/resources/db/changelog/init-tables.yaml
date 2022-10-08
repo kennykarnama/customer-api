@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-customer
+      author: kenny.karnama
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: customers
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: CUSTOMER_PK
+                  name: cust_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: cust_name
+                  type: VARCHAR(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: cust_address
+                  type: VARCHAR(200)
+            tableName: customers
