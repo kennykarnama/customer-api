@@ -27,5 +27,4 @@ public class CustomerDomainService implements CustomerService {
     public Optional<Customer> findById(int id) {
         return this.customerRepo.findById(id);
     }
-    
 }
