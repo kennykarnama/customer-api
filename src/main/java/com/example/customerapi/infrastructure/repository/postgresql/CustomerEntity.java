@@ -32,7 +32,7 @@ public class CustomerEntity {
     }
 
     public Customer toCustomer() {
-        Customer c = new Customer(this.custId, this.custName, this.custName);
+        Customer c = new Customer(this.custId, this.custName, this.custAddress);
         return c;
     }
 }

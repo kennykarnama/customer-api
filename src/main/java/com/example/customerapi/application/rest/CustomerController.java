@@ -1,8 +1,9 @@
 package com.example.customerapi.application.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +26,9 @@ public class CustomerController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    SaveCustomerResponse createOrder(@RequestBody final SaveCustomerRequest saveCustomerRequest) {
-        Customer saved = this.customerService.save(saveCustomerRequest.getCustomer());
-        return new SaveCustomerResponse(saved);
+    SaveCustomerResponse saveCustomers(@RequestBody final SaveCustomerRequest saveCustomerRequest) {
+        List<Customer> savedCustomers = this.customerService.saveAll(saveCustomerRequest.getCustomers());
+        return new SaveCustomerResponse(savedCustomers);
     }
     
 }

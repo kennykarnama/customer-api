@@ -35,7 +35,7 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer c = (Customer) o;
-        return Objects.equals(id, c.id) && Objects.equals(name, c.name) && Objects.equals(address, c.name);
+        return Objects.equals(id, c.id) && Objects.equals(name, c.name) && Objects.equals(address, c.address);
     }
 
     @Override

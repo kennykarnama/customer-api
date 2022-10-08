@@ -1,5 +1,7 @@
 package com.example.customerapi.infrastructure.repository.postgresql;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,17 @@ public class PostgreSqlRepository implements CustomerRepository {
     }
 
     @Override
-    public Customer save(Customer customer) {
-        CustomerEntity data = new CustomerEntity(customer);
-        this.repo.save(data);
-        return data.toCustomer();
+    public List<Customer> saveAll(List<Customer> customers) {
+        List<CustomerEntity> savedData = new ArrayList<>();
+        customers.forEach((c)->{
+            savedData.add(new CustomerEntity(c));
+        });
+        this.repo.saveAll(savedData);
+        List<Customer> savedCustomers = new ArrayList<>();
+        savedData.forEach((s)->{
+            savedCustomers.add(s.toCustomer());
+        });
+        return savedCustomers;
     }
 
     @Override

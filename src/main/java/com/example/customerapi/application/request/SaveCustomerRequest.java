@@ -1,20 +1,20 @@
 package com.example.customerapi.application.request;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
 import com.example.customerapi.domain.Customer;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SaveCustomerRequest {
-    @NotNull private Customer customer;
+    @NotNull private final List<Customer> customers;
 
-    @JsonCreator
-    public SaveCustomerRequest(@JsonProperty("customer") final Customer customer) {
-        this.customer = customer;
+    public SaveCustomerRequest(@JsonProperty("customers") final List<Customer> customers) {
+        this.customers = customers;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public List<Customer> getCustomers() {
+        return customers;
     }
 }

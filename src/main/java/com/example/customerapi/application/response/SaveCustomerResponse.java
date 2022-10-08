@@ -1,17 +1,20 @@
 package com.example.customerapi.application.response;
 
+import java.util.List;
+
 import com.example.customerapi.domain.Customer;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SaveCustomerResponse {
     
-    private final Customer customer;
+    private final List<Customer> customers;
     
-    public SaveCustomerResponse(final Customer customer) {
-        this.customer = customer;
+    public SaveCustomerResponse(@JsonProperty("customers") final List<Customer> customers) {
+        this.customers = customers;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public List<Customer> getCustomers() {
+        return customers;
     }
     
 }

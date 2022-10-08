@@ -1,5 +1,6 @@
 package com.example.customerapi.domain.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -17,8 +18,8 @@ public class CustomerDomainService implements CustomerService {
 
     @Override
     @Transactional
-    public Customer save(Customer customer) {
-        return this.customerRepo.save(customer);
+    public List<Customer> saveAll(List<Customer> customers) {
+        return this.customerRepo.saveAll(customers);
     }
 
     @Override
