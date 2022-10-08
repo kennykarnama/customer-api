@@ -45,6 +45,5 @@ public class PostgreSqlRepository implements CustomerRepository {
        }
 
         return Optional.empty();
-    }
-    
+    }   
 }
