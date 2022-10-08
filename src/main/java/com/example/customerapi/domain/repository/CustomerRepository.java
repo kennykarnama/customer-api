@@ -8,4 +8,6 @@ import com.example.customerapi.domain.Customer;
 public interface CustomerRepository {
     public List<Customer> saveAll(List<Customer> customers);
     public Optional<Customer> findById(int id);
+    public void deleteById(int id);
+    public List<Customer> patchAll(List<Customer> customers);
 }

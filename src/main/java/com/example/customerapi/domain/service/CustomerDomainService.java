@@ -1,5 +1,6 @@
 package com.example.customerapi.domain.service;
 
+import java.lang.StackWalker.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,8 @@ import javax.transaction.Transactional;
 
 import com.example.customerapi.domain.Customer;
 import com.example.customerapi.domain.repository.CustomerRepository;
+
+import liquibase.pro.packaged.nu;
 
 public class CustomerDomainService implements CustomerService {
 
@@ -26,5 +29,18 @@ public class CustomerDomainService implements CustomerService {
     @Transactional
     public Optional<Customer> findById(int id) {
         return this.customerRepo.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(int id) {
+        this.customerRepo.deleteById(id)                                   ;
+    }
+
+    @Override
+    @Transactional
+    public List<Customer> updatePartials(List<Customer> customers) {
+        List<Customer> updated = this.customerRepo.patchAll(customers);
+        return updated;
     }
 }

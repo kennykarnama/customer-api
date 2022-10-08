@@ -8,11 +8,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Customer {
 
     private final int id;
-    private final String name;
-    private final String address;
+    private String name;
+    private String address;
     
     @JsonCreator
-    public Customer(@JsonProperty("id") final int id, @JsonProperty("name") final String name, @JsonProperty("address") String address) {
+    public Customer(@JsonProperty("id") final int id, @JsonProperty("name") String name, @JsonProperty("address") String address) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -28,6 +28,14 @@ public class Customer {
 
     public String getAddress() {
         return address;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override

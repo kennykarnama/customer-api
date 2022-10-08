@@ -9,4 +9,8 @@ public interface CustomerService {
     List<Customer> saveAll(List<Customer> customers);
 
     Optional<Customer> findById(int id);
+
+    void deleteById(int id);
+
+    List<Customer> updatePartials(List<Customer> customers);
 }
