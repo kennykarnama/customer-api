@@ -7,9 +7,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.example.customerapi.domain.Customer;
+import com.example.customerapi.domain.CustomerSearchCriteria;
+import com.example.customerapi.domain.PaginatedCustomer;
+import com.example.customerapi.domain.Paging;
 import com.example.customerapi.domain.repository.CustomerRepository;
 
 @Component
@@ -77,7 +82,7 @@ public class PostgreSqlRepository implements CustomerRepository {
                 mapped.remove(e.getCustId());   
             }
         });
-
+        
         Iterable<CustomerEntity> updated = this.repo.saveAll(entities);
 
         List<Customer> updatedCustomers = new ArrayList<>();
@@ -87,5 +92,39 @@ public class PostgreSqlRepository implements CustomerRepository {
         });
 
         return updatedCustomers;
+    }
+
+    @Override
+    public PaginatedCustomer findAllByNameAndAddressContains(String name, String address, Pageable pageable) {
+        
+        Page<CustomerEntity> entities = this.repo.findAllByCustNameAndCustAddressContains(name, address, pageable);
+        
+        List<Customer> customers = new ArrayList<>();
+
+        entities.forEach((e)->{
+            customers.add(e.toCustomer());
+        });
+
+        PaginatedCustomer result = PaginatedCustomer.builder().customers(customers).
+        numberOfItems(entities.getTotalElements()).numberOfPages(entities.getTotalPages()).build();
+        
+        return result;
+    }
+
+    @Override
+    public PaginatedCustomer findAllByCriteria(CustomerSearchCriteria criteria, Paging paging) {
+        
+        Page<CustomerEntity> entities = this.repo.findAllWithFilters(criteria, paging);
+
+        List<Customer> customers = new ArrayList<>();
+
+        entities.forEach((e)->{
+            customers.add(e.toCustomer());
+        });
+
+        PaginatedCustomer result = PaginatedCustomer.builder().customers(customers).
+        numberOfItems(entities.getTotalElements()).numberOfPages(entities.getTotalPages()).build();
+        
+        return result;
     }
 }

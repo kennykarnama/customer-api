@@ -5,7 +5,12 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Pageable;
+
 import com.example.customerapi.domain.Customer;
+import com.example.customerapi.domain.CustomerSearchCriteria;
+import com.example.customerapi.domain.PaginatedCustomer;
+import com.example.customerapi.domain.Paging;
 import com.example.customerapi.domain.repository.CustomerRepository;
 
 public class CustomerDomainService implements CustomerService {
@@ -31,7 +36,7 @@ public class CustomerDomainService implements CustomerService {
     @Override
     @Transactional
     public void deleteById(int id) {
-        this.customerRepo.deleteById(id)                                   ;
+        this.customerRepo.deleteById(id);
     }
 
     @Override
@@ -39,5 +44,16 @@ public class CustomerDomainService implements CustomerService {
     public List<Customer> updatePartials(List<Customer> customers) {
         List<Customer> updated = this.customerRepo.patchAll(customers);
         return updated;
+    }
+
+    @Override
+    @Transactional
+    public PaginatedCustomer findAllByNameAndAddressContains(String name, String address, Pageable pageable) {
+        return this.customerRepo.findAllByNameAndAddressContains(name, address, pageable);
+    }
+
+    @Override
+    public PaginatedCustomer findAllByCriteria(CustomerSearchCriteria criteria, Paging paging) {
+        return this.customerRepo.findAllByCriteria(criteria, paging);
     }
 }
