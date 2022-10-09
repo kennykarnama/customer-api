@@ -52,7 +52,8 @@ public class CustomerController {
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     FindCustomerByIdResponse findCustomerById(@PathVariable Integer id) {
         Optional<Customer> customer = this.customerService.findById(id);
-        return new FindCustomerByIdResponse(customer.get());
+        Customer picked = customer.get();
+        return new FindCustomerByIdResponse(picked);
     }
 
     @DeleteMapping(path="/{id}")
