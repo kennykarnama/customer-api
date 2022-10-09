@@ -1,23 +1,24 @@
 package com.example.customerapi.application.request;
 
-import java.util.List;
-
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.example.customerapi.domain.Customer;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Data;
+
+@Data
 public class PatchCustomerRequest {
     
-    @NotNull private final List<Customer> customers;
+    @NotNull
+    @Min(1)
+    private Integer id;
 
-    @JsonCreator
-    public PatchCustomerRequest(@JsonProperty("customers") final List<Customer> customers) {
-        this.customers = customers;
-    }
+    private String name;
+    
+    private String address;
 
-    public List<Customer> getCustomers() {
-        return customers;
+    public Customer toCustomer() {
+        return new Customer(this.id, this.name, this.address);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.customerapi.application.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.customerapi.application.request.CustomerCriteria;
 import com.example.customerapi.application.request.PagingRequest;
 import com.example.customerapi.application.request.PatchCustomerRequest;
-import com.example.customerapi.application.request.SaveCustomerRequest;
 import com.example.customerapi.application.response.FindCustomerByIdResponse;
 import com.example.customerapi.application.response.ListCustomerResponse;
 import com.example.customerapi.application.response.PatchCustomerResponse;
@@ -31,6 +32,7 @@ import com.example.customerapi.domain.Paging;
 import com.example.customerapi.domain.service.CustomerService;
 
 @RestController
+@Validated
 @RequestMapping("/v1/customers")
 public class CustomerController {
     
@@ -42,17 +44,14 @@ public class CustomerController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    SaveCustomerResponse saveCustomers(@RequestBody final SaveCustomerRequest saveCustomerRequest) {
-        List<Customer> savedCustomers = this.customerService.saveAll(saveCustomerRequest.getCustomers());
+    SaveCustomerResponse saveCustomers(@RequestBody @Valid final List<@Valid Customer> customers) {
+        List<Customer> savedCustomers = this.customerService.saveAll(customers);
         return new SaveCustomerResponse(savedCustomers);
     }
     
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     FindCustomerByIdResponse findCustomerById(@PathVariable Integer id) {
         Optional<Customer> customer = this.customerService.findById(id);
-        if (!customer.isPresent()) {
-           return null;
-        }
         return new FindCustomerByIdResponse(customer.get());
     }
 
@@ -62,12 +61,16 @@ public class CustomerController {
     }
 
     @PatchMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    PatchCustomerResponse patchCustomers(@RequestBody final PatchCustomerRequest updateCustomerRequest) {
-        List<Customer> updated = this.customerService.updatePartials(updateCustomerRequest.getCustomers());
+    PatchCustomerResponse patchCustomers(@RequestBody @Valid final List<@Valid PatchCustomerRequest> patchRequest) {
+        List<Customer> customers = new ArrayList<>();
+        patchRequest.forEach((r)->{
+            customers.add(r.toCustomer());
+        });
+        List<Customer> updated = this.customerService.updatePartials(customers);
         return new PatchCustomerResponse(updated);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path="/search", produces = MediaType.APPLICATION_JSON_VALUE)
     ListCustomerResponse listCustomers(@Valid CustomerCriteria criteria, PagingRequest pagingRequest) {
         
         // TODO: set separate function to parse
