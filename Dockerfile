@@ -6,8 +6,6 @@ COPY . .
 
 RUN mvn clean package -DskipTests
 
-ADD target/customer-api-docker.jar customer-api-docker.jar
-
-ENTRYPOINT ["java", "-jar","customer-api-docker.jar"]
+ENTRYPOINT ["java", "-jar","target/customer-api-docker.jar"]
 
 EXPOSE 8080
