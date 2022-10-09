@@ -5,8 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.data.domain.Pageable;
-
 import com.example.customerapi.domain.Customer;
 import com.example.customerapi.domain.CustomerSearchCriteria;
 import com.example.customerapi.domain.PaginatedCustomer;
@@ -48,11 +46,6 @@ public class CustomerDomainService implements CustomerService {
 
     @Override
     @Transactional
-    public PaginatedCustomer findAllByNameAndAddressContains(String name, String address, Pageable pageable) {
-        return this.customerRepo.findAllByNameAndAddressContains(name, address, pageable);
-    }
-
-    @Override
     public PaginatedCustomer findAllByCriteria(CustomerSearchCriteria criteria, Paging paging) {
         return this.customerRepo.findAllByCriteria(criteria, paging);
     }

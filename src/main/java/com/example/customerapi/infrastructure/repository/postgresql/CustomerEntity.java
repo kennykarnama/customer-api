@@ -26,9 +26,7 @@ public class CustomerEntity {
     @Column(nullable = false)
     private String custAddress;
 
-    public CustomerEntity() {
-
-    }
+    public CustomerEntity() {}
 
     public CustomerEntity(Customer c) {
         this.custName = c.getName();

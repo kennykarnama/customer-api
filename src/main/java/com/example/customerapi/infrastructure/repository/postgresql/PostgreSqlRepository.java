@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.example.customerapi.domain.Customer;
@@ -92,23 +91,6 @@ public class PostgreSqlRepository implements CustomerRepository {
         });
 
         return updatedCustomers;
-    }
-
-    @Override
-    public PaginatedCustomer findAllByNameAndAddressContains(String name, String address, Pageable pageable) {
-        
-        Page<CustomerEntity> entities = this.repo.findAllByCustNameAndCustAddressContains(name, address, pageable);
-        
-        List<Customer> customers = new ArrayList<>();
-
-        entities.forEach((e)->{
-            customers.add(e.toCustomer());
-        });
-
-        PaginatedCustomer result = PaginatedCustomer.builder().customers(customers).
-        numberOfItems(entities.getTotalElements()).numberOfPages(entities.getTotalPages()).build();
-        
-        return result;
     }
 
     @Override
