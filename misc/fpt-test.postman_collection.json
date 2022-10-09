@@ -36,6 +36,35 @@
 			"response": []
 		},
 		{
+			"name": "Add customer error empty",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n        {\n            \"name\": \"\",\n            \"address\": \"test2\"\n        },\n        {\n            \"name\": \"jenny\",\n            \"address\": \"test3\"\n        }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Partial updates",
 			"request": {
 				"method": "PATCH",
