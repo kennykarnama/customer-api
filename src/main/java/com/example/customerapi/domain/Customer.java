@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Customer {
 
-    private final int id;
+    private final Integer id;
     private String name;
     private String address;
     

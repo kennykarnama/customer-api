@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN mvn clean install -DskipTests
+RUN mvn clean package -DskipTests
 
 ADD target/customer-api-docker.jar customer-api-docker.jar
 
