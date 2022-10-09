@@ -12,7 +12,7 @@ Columns:
 
 ## How to run
 
-Just run `docker compose up -d`
+Just run `docker compose up -d --build`
 
 It will spawns web-server containers on port `8080` and postgresql database on port `5432`
 
