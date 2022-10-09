@@ -67,3 +67,20 @@ curl --location --request PATCH 'http://localhost:8080/v1/customers' \
     ]
 }'
 ```
+
+### List customers
+
+```
+curl --location --request GET 'http://localhost:8080/v1/customers?{query_param}'
+```
+
+```
+{query_param}
+
+- page: default 1, int
+- pageSize: default 10, int
+- name: Optional, string
+- address: Optional, string
+- sortDirection: Optional, default ASC, enum (ASC|DESC
+- sortBy: Optional, default depends on domain, for customer it will be sorted based on custId
+```
