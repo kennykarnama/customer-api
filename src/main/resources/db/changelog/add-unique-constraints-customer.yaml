@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-customer-unique-constraint
+      author: kenny.karnama
+      changes:
+        - addUniqueConstraint:
+            columnNames: cust_name, cust_address
+            constraintName: CUSTOMER__UNIQUE_CONSTRAINT
+            tableName: customers

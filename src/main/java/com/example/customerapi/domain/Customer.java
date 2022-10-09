@@ -2,13 +2,22 @@ package com.example.customerapi.domain;
 
 import java.util.Objects;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Customer {
 
     private final Integer id;
+
+    @NotEmpty(message = "customer name cannot be empty")
+    @Size(min = 1, max = 100, message = "customer name must be in length >= 1 and <= 100")
     private String name;
+
+    @NotEmpty(message = "customer address cannot be empty")
+    @Size(min = 1, max = 100, message = "customer address must be in length >= 1 and <= 100")
     private String address;
     
     @JsonCreator
